@@ -1,12 +1,13 @@
-import { mediaManifest, resolveMedia } from "../../content/assets";
+import { mediaManifest } from "../../content/assets";
 import type { CooperationItem, MediaManifest, Partner } from "../../content/types";
-import { cooperationSectionLabels } from "../../content/labels";
+import { useLabels } from "../../content/labels";
 import { cn } from "../../lib/cn";
 import { PartnerLogo } from "../media/PartnerLogo";
 import { Button } from "../ui/Button";
 import { Card } from "../ui/Card";
 
 export function CooperationTypeCard({ item }: { item: CooperationItem }) {
+  const { cooperationSectionLabels } = useLabels();
   return (
     <Card data-cooperation-card>
       <h3 className="font-display text-xl font-bold text-aic-navy">{item.title}</h3>
@@ -32,12 +33,7 @@ export function InternationalCooperationBanner({ item }: { item: CooperationItem
   );
 }
 
-function hasPartnerLogoSource(partner: Partner, manifest: MediaManifest) {
-  if (partner.logo?.src) return true;
-  if (!partner.mediaRef) return false;
-  const media = resolveMedia(partner.mediaRef, manifest);
-  return Boolean(media?.kind === "image" && media.src);
-}
+
 
 export function PartnerGrid({
   partners,
@@ -47,29 +43,9 @@ export function PartnerGrid({
   manifest?: MediaManifest;
 }) {
   if (!partners.length) return null;
-  const realSourceCount = partners.filter((partner) =>
-    hasPartnerLogoSource(partner, manifest),
-  ).length;
-  const useMarquee = realSourceCount >= 5;
-
-  if (!useMarquee) {
-    return (
-      <div
-        data-testid="partner-grid"
-        data-layout="grid"
-        className="grid grid-cols-2 gap-4 md:grid-cols-4"
-      >
-        {partners.map((partner) => (
-          <PartnerLogo
-            key={partner.id}
-            partner={partner}
-            manifest={manifest}
-            className="w-full min-w-0"
-          />
-        ))}
-      </div>
-    );
-  }
+  
+  // Ensure enough items for an infinite marquee
+  const displayPartners = partners.length < 5 ? Array(Math.ceil(5 / partners.length)).fill(partners).flat() : partners;
 
   return (
     <div
@@ -80,9 +56,9 @@ export function PartnerGrid({
     >
       <div className="partner-track flex w-max gap-0 group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused]">
         <div data-marquee-group="primary" className="partner-primary flex shrink-0 gap-4 pr-4">
-          {partners.map((partner) => (
+          {displayPartners.map((partner, index) => (
             <PartnerLogo
-              key={partner.id}
+              key={`${partner.id}-${index}`}
               partner={partner}
               manifest={manifest}
               className="w-44 shrink-0 motion-reduce:w-full"
@@ -95,9 +71,9 @@ export function PartnerGrid({
           className="partner-duplicate flex shrink-0 gap-4 pr-4"
           aria-hidden="true"
         >
-          {partners.map((partner) => (
+          {displayPartners.map((partner, index) => (
             <PartnerLogo
-              key={`${partner.id}-duplicate`}
+              key={`${partner.id}-duplicate-${index}`}
               partner={partner}
               manifest={manifest}
               className="w-44 shrink-0"

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { siteContent } from "./site";
 import { stitchContent } from "./stitch";
-import { verifiedSiteContent } from "./verified";
+import { verifiedSiteContentVi } from "./verified";
 
 describe("verified AIC content", () => {
   it("publishes only the approved institutional content", () => {
@@ -19,10 +19,10 @@ describe("verified AIC content", () => {
   });
 
   it("keeps the verified source free of demo records", () => {
-    expect(verifiedSiteContent.people).toEqual([]);
-    expect(verifiedSiteContent.research.groups).toEqual([]);
-    expect(verifiedSiteContent.cooperation.partners).toEqual([]);
-    expect(verifiedSiteContent.students.joinSteps).toEqual([]);
+    expect(verifiedSiteContentVi.people).toEqual([]);
+    expect(verifiedSiteContentVi.research.groups).toEqual([]);
+    expect(verifiedSiteContentVi.cooperation.partners).toEqual([]);
+    expect(verifiedSiteContentVi.students.joinSteps).toEqual([]);
   });
 
   it("composes source-labelled Stitch records while preserving verified lab names", () => {

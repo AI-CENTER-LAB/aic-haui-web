@@ -11,9 +11,9 @@ import { PageHero } from "../components/sections/PageHero";
 import { ResearchMetrics } from "../components/sections/ResearchMetrics";
 import { PageContainer } from "../components/ui/PageContainer";
 import { Section } from "../components/ui/Section";
-import { researchSectionLabels, sharedCtaLabels } from "../content/labels";
+import { useLabels } from "../content/labels";
 import { resolveSectionState } from "../content/selectors";
-import { siteContent } from "../content/site";
+import { useSiteContent } from "../content/site";
 import type { SiteContent } from "../content/types";
 import { scaffoldConfig } from "../scaffold/config";
 
@@ -27,52 +27,55 @@ type KnownResearchGroupId =
   | "ai-ethics-lab";
 
 const researchGroupLayout = [
-  { id: "computer-vision-lab", variant: "featured" },
+  { id: "computer-vision-lab", variant: "compact" },
   { id: "nlp-lab", variant: "compact" },
   { id: "robotics-lab", variant: "compact" },
   { id: "data-science-lab", variant: "compact" },
-  { id: "applied-ai-lab", variant: "accent" },
+  { id: "applied-ai-lab", variant: "compact" },
   { id: "iot-ai-lab", variant: "compact" },
   { id: "ai-ethics-lab", variant: "compact" },
 ] as const satisfies readonly ResearchGroupLayoutEntry<KnownResearchGroupId>[];
 
 export function ResearchPage({
-  content = siteContent,
+  content,
   scaffoldMode,
 }: {
   content?: SiteContent;
   scaffoldMode?: boolean;
 }) {
+  const defaultContent = useSiteContent();
+  const { researchSectionLabels, sharedCtaLabels } = useLabels();
+  const actualContent = content || defaultContent;
   const directions = resolveSectionState(
-    content.research.directions,
+    actualContent.research.directions,
     scaffoldMode,
     scaffoldConfig.research.directions,
   );
   const metrics = resolveSectionState(
-    content.research.metrics ?? [],
+    actualContent.research.metrics ?? [],
     scaffoldMode,
     scaffoldConfig.research.metrics,
   );
   const groups = resolveSectionState(
-    content.research.groups,
+    actualContent.research.groups,
     scaffoldMode,
     researchGroupLayout.length,
   );
-  const contactHref = content.cooperation.contactHref?.startsWith("mailto:")
-    ? content.cooperation.contactHref
+  const contactHref = actualContent.cooperation.contactHref?.startsWith("mailto:")
+    ? actualContent.cooperation.contactHref
     : undefined;
   const directionCtaHref = groups.status === "ready" ? "#research-groups" : undefined;
 
   return (
     <RouteTransition>
-      <PageHero copy={content.pages.research} />
+      <PageHero copy={actualContent.pages.research} />
       <ContentSection
         title={researchSectionLabels.directions}
         state={directions}
         scaffold={<ResearchDirectionScaffold count={scaffoldConfig.research.directions} />}
       >
         <div data-testid="research-directions">
-          <ResearchGrid items={content.research.directions} directionCtaHref={directionCtaHref} />
+          <ResearchGrid items={actualContent.research.directions} directionCtaHref={directionCtaHref} />
         </div>
       </ContentSection>
       <ResearchMetrics state={metrics} />
@@ -84,7 +87,7 @@ export function ResearchPage({
       >
         <div id="research-groups" data-testid="research-labs">
           <ResearchGrid
-            items={content.research.groups}
+            items={actualContent.research.groups}
             variant="group"
             groupLayout={researchGroupLayout}
             memberSuffix={researchSectionLabels.membersSuffix}

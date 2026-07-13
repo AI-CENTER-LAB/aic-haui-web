@@ -3,7 +3,7 @@ import { describe, expect, expectTypeOf, it, vi } from "vitest";
 import { siteContent } from "./site";
 import { stitchContent } from "./stitch";
 import type { StitchContent } from "./stitch";
-import { verifiedSiteContent } from "./verified";
+import { verifiedSiteContentVi } from "./verified";
 
 function deepFreeze(value: unknown): void {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return;
@@ -125,9 +125,9 @@ describe("Stitch prototype content", () => {
   });
 
   it("composes verified core content with demo collections without mutating either source", () => {
-    expect(siteContent.identity).toEqual(verifiedSiteContent.identity);
-    expect(siteContent.about).toEqual(verifiedSiteContent.about);
-    expect(siteContent.contact).toEqual(verifiedSiteContent.contact);
+    expect(siteContent.identity).toEqual(verifiedSiteContentVi.identity);
+    expect(siteContent.about).toEqual(verifiedSiteContentVi.about);
+    expect(siteContent.contact).toEqual(verifiedSiteContentVi.contact);
     expect(siteContent.people).toEqual(stitchContent.people);
     expect(siteContent.research.groups).toEqual(stitchContent.research.groups);
     expect(siteContent.students.labs.map((lab) => lab.name)).toEqual([
@@ -135,7 +135,7 @@ describe("Stitch prototype content", () => {
       "AIC Innovation Lab",
     ]);
 
-    expect(siteContent).not.toBe(verifiedSiteContent);
+    expect(siteContent).not.toBe(verifiedSiteContentVi);
     expect(siteContent.people).not.toBe(stitchContent.people);
     expect(siteContent.research).not.toBe(stitchContent.research);
     expect(siteContent.students).not.toBe(stitchContent.students);
@@ -143,7 +143,7 @@ describe("Stitch prototype content", () => {
 
   it("does not mutate frozen source objects while composing runtime content", async () => {
     vi.resetModules();
-    const [{ stitchContent: stitchSource }, { verifiedSiteContent: verifiedSource }] =
+    const [{ stitchContent: stitchSource }, { verifiedSiteContentVi: verifiedSource }] =
       await Promise.all([import("./stitch"), import("./verified")]);
     const stitchSnapshot = structuredClone(stitchSource);
     const verifiedSnapshot = structuredClone(verifiedSource);

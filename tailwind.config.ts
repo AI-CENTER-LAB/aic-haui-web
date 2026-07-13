@@ -30,6 +30,7 @@ export default {
       fontFamily: {
         sans: ["Be Vietnam Pro", "Inter", "system-ui", "sans-serif"],
         display: ["Be Vietnam Pro", "Inter", "system-ui", "sans-serif"],
+        serif: ["Merriweather", "serif"],
       },
     },
   },

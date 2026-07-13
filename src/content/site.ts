@@ -12,7 +12,9 @@ import type {
   ResearchItem,
   SiteContent,
 } from "./types";
-import { verifiedSiteContent } from "./verified";
+import { verifiedSiteContentVi, verifiedSiteContentEn } from "./verified";
+import { stitchContentEn } from "./stitchEn";
+import { useLanguage } from "../contexts/LanguageContext";
 
 type IdentifiedRecord = { id: string };
 type SourcedIdentifiedRecord = IdentifiedRecord & { source?: ContentSource };
@@ -168,4 +170,11 @@ export function composeSiteContent(verified: SiteContent, demo: StitchContent): 
   };
 }
 
-export const siteContent = composeSiteContent(verifiedSiteContent, stitchContent);
+export function useSiteContent(): SiteContent {
+  const { language } = useLanguage();
+  const verified = language === "en" ? verifiedSiteContentEn : verifiedSiteContentVi;
+  const demo = language === "en" ? stitchContentEn : stitchContent;
+  return composeSiteContent(verified, demo);
+}
+
+export const siteContent = composeSiteContent(verifiedSiteContentVi, stitchContent);

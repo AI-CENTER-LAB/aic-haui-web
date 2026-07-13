@@ -4,24 +4,27 @@ import { OrganizationGroup } from "../components/sections/OrganizationGroup";
 import { PageHero } from "../components/sections/PageHero";
 import { PageContainer } from "../components/ui/PageContainer";
 import { Section } from "../components/ui/Section";
-import { organizationSectionLabels } from "../content/labels";
+import { useLabels } from "../content/labels";
 import { resolveSectionState } from "../content/selectors";
-import { siteContent } from "../content/site";
+import { useSiteContent } from "../content/site";
 import type { SiteContent } from "../content/types";
 import { cn } from "../lib/cn";
 import { scaffoldConfig } from "../scaffold/config";
 
 export function OrganizationPage({
-  content = siteContent,
+  content,
   scaffoldMode,
 }: {
   content?: SiteContent;
   scaffoldMode?: boolean;
 }) {
-  const directors = content.people.filter((person) => person.group === "director");
-  const teacherLeaders = content.people.filter((person) => person.group === "teacher-lab");
-  const studentLeaders = content.people.filter((person) => person.group === "student-leader");
-  const council = content.research.council ?? [];
+  const defaultContent = useSiteContent();
+  const { organizationSectionLabels } = useLabels();
+  const actualContent = content || defaultContent;
+  const directors = actualContent.people.filter((person) => person.group === "director");
+  const teacherLeaders = actualContent.people.filter((person) => person.group === "teacher-lab");
+  const studentLeaders = actualContent.people.filter((person) => person.group === "student-leader");
+  const council = actualContent.research.council ?? [];
   const directorState = resolveSectionState(
     directors,
     scaffoldMode,
@@ -50,7 +53,7 @@ export function OrganizationPage({
 
   return (
     <RouteTransition>
-      <PageHero copy={content.pages.organization} />
+      <PageHero copy={actualContent.pages.organization} />
       {showDirector && (
         <Section className="section-reveal bg-white">
           <PageContainer>

@@ -15,9 +15,9 @@ import {
 import { PageContainer } from "../components/ui/PageContainer";
 import { Section } from "../components/ui/Section";
 import { SectionHeading } from "../components/ui/SectionHeading";
-import { studentSectionLabels } from "../content/labels";
+import { useLabels } from "../content/labels";
 import { resolveSectionState, uiScaffoldMode } from "../content/selectors";
-import { siteContent } from "../content/site";
+import { useSiteContent } from "../content/site";
 import type { ContentState, SiteContent } from "../content/types";
 import { scaffoldConfig } from "../scaffold/config";
 import { SectionRenderer } from "../scaffold/SectionRenderer";
@@ -52,13 +52,16 @@ function StudentSection({
 }
 
 export function StudentsPage({
-  content = siteContent,
+  content,
   scaffoldMode = uiScaffoldMode,
 }: {
   content?: SiteContent;
   scaffoldMode?: boolean;
 }) {
-  const data = content.students;
+  const defaultContent = useSiteContent();
+  const { studentSectionLabels } = useLabels();
+  const actualContent = content || defaultContent;
+  const data = actualContent.students;
   const labsState = resolveSectionState(data.labs, scaffoldMode, scaffoldConfig.students.labs);
   const timelineState = resolveSectionState(
     data.joinSteps,
@@ -69,7 +72,7 @@ export function StudentsPage({
   return (
     <RouteTransition>
       <StudentHero
-        copy={content.pages.students}
+        copy={actualContent.pages.students}
         ctaHref={labsState.status === "ready" ? "#research-space" : undefined}
         ctaLabel={studentSectionLabels.heroCta}
         scaffold={scaffoldMode ? <MediaSkeleton className="aspect-[4/3]" /> : undefined}

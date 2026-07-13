@@ -3,8 +3,9 @@ import { describe, expect, it } from "vitest";
 import { composeSiteContent, mergeRecordsById } from "./site";
 import { stitchContent } from "./stitch";
 import type { StitchContent } from "./stitch";
+import { stitchContentEn } from "./stitchEn";
 import type { ContentSource, ResearchItem, SiteContent } from "./types";
-import { verifiedSiteContent } from "./verified";
+import { verifiedSiteContentEn, verifiedSiteContentVi } from "./verified";
 
 function deepFreeze(value: unknown): void {
   if (!value || typeof value !== "object" || Object.isFrozen(value)) return;
@@ -74,7 +75,7 @@ describe("site content composition API", () => {
   });
 
   it("composes verified replacements across every runtime collection without mutation", () => {
-    const verified: SiteContent = structuredClone(verifiedSiteContent);
+    const verified: SiteContent = structuredClone(verifiedSiteContentVi);
     const demo: StitchContent = structuredClone(stitchContent);
     const syntheticResult: ResearchItem & { source: "stitch" } = {
       id: "result-shared",
@@ -154,7 +155,7 @@ describe("site content composition API", () => {
         verifiedSource: SiteContent,
         demoSource: StitchContent,
       ) => SiteContent
-    )(verifiedSiteContent, stitchContent);
+    )(verifiedSiteContentVi, stitchContent);
 
     expect(result.students.labs.map(({ name }) => name)).toEqual([
       "AIC Foundry Lab",
@@ -164,8 +165,17 @@ describe("site content composition API", () => {
     expect(result.students.labs[0].benefits).toEqual(stitchContent.students.labs[0].benefits);
   });
 
+  it("composes English verified and mock content without Vietnamese fallbacks", () => {
+    const result = composeSiteContent(verifiedSiteContentEn, stitchContentEn);
+
+    expect(result.hero.title).toBe(stitchContentEn.hero.title);
+    expect(result.research.groups).toEqual(stitchContentEn.research.groups);
+    expect(result.students.joinSteps).toEqual(stitchContentEn.students.joinSteps);
+    expect(result.footer.description).toBe(stitchContentEn.footer.description);
+  });
+
   it("does not publish a source-less verified-only lab", () => {
-    const verified: SiteContent = structuredClone(verifiedSiteContent);
+    const verified: SiteContent = structuredClone(verifiedSiteContentVi);
     verified.students.labs.push({ id: "unlabelled-only", name: "Unlabelled Lab" });
 
     const result = composeSiteContent(verified, stitchContent);
@@ -174,7 +184,7 @@ describe("site content composition API", () => {
   });
 
   it("limits a source-less same-ID lab overlay to its verified name", () => {
-    const verified: SiteContent = structuredClone(verifiedSiteContent);
+    const verified: SiteContent = structuredClone(verifiedSiteContentVi);
     const demo: StitchContent = structuredClone(stitchContent);
     const demoLab = demo.students.labs[0];
     verified.students.labs = [
@@ -198,7 +208,7 @@ describe("site content composition API", () => {
   });
 
   it("allows a labelled verified lab to replace the full Stitch record", () => {
-    const verified: SiteContent = structuredClone(verifiedSiteContent);
+    const verified: SiteContent = structuredClone(verifiedSiteContentVi);
     const demo: StitchContent = structuredClone(stitchContent);
     const replacement = {
       id: demo.students.labs[0].id,
@@ -214,7 +224,7 @@ describe("site content composition API", () => {
   });
 
   it("clones selected hero and about video media away from source objects", () => {
-    const verified: SiteContent = structuredClone(verifiedSiteContent);
+    const verified: SiteContent = structuredClone(verifiedSiteContentVi);
     const demo: StitchContent = structuredClone(stitchContent);
     verified.about.video = {
       type: "video",

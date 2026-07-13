@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { navigationRoutes } from "../../app/routes";
-import { siteContent } from "../../content/site";
+import { useSiteContent } from "../../content/site";
 import { PageContainer } from "../ui/PageContainer";
 
 export function Footer() {
+  const siteContent = useSiteContent();
   return (
     <footer className="bg-aic-navy py-12 text-white md:py-16">
       <PageContainer className="grid gap-10 md:grid-cols-[1fr_2fr]">

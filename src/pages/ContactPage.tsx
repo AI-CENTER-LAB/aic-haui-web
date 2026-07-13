@@ -5,20 +5,23 @@ import { ContactCardSkeleton } from "../components/scaffold/ScaffoldBlocks";
 import { PageHero } from "../components/sections/PageHero";
 import { PageContainer } from "../components/ui/PageContainer";
 import { Section } from "../components/ui/Section";
-import { contactSectionLabels } from "../content/labels";
+import { useLabels } from "../content/labels";
 import { resolveSectionState, uiScaffoldMode } from "../content/selectors";
-import { siteContent } from "../content/site";
+import { useSiteContent } from "../content/site";
 import type { SiteContent } from "../content/types";
 import { scaffoldConfig } from "../scaffold/config";
 
 export function ContactPage({
-  content = siteContent,
+  content,
   scaffoldMode = uiScaffoldMode,
 }: {
   content?: SiteContent;
   scaffoldMode?: boolean;
 }) {
-  const data = content.contact;
+  const defaultContent = useSiteContent();
+  const { contactSectionLabels } = useLabels();
+  const actualContent = content || defaultContent;
+  const data = actualContent.contact;
   const state = resolveSectionState(data.items, scaffoldMode, scaffoldConfig.contact.cards);
   const heroCopy = {
     title: contactSectionLabels.heroTitle,

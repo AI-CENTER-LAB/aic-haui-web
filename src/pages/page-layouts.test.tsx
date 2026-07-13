@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { emptySiteContent } from "../content/empty";
 import { siteContent } from "../content/site";
-import { verifiedSiteContent } from "../content/verified";
+import { verifiedSiteContentVi } from "../content/verified";
 import { cooperationSectionLabels, researchSectionLabels } from "../content/labels";
 import type { CouncilMember, Person, SiteContent } from "../content/types";
 import { CouncilPanel } from "../components/cards/CouncilPanel";
@@ -147,7 +147,7 @@ describe("verified core with Stitch demo content", () => {
     expect(screen.getByText(approvedContactLabels.heroDescription)).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Phòng 1504, Tòa nhà A1" })).toBeInTheDocument();
     expect(container.querySelectorAll("[data-contact-card]")).toHaveLength(3);
-    expect(screen.getAllByText(verifiedSiteContent.contact.items[0].secondary ?? "")).toHaveLength(
+    expect(screen.getAllByText(verifiedSiteContentVi.contact.items[0].secondary ?? "")).toHaveLength(
       2,
     );
     expect(emailLink).toHaveAttribute("href", "mailto:aic-sict@haui.edu.vn");
@@ -160,15 +160,15 @@ describe("verified core with Stitch demo content", () => {
   });
 
   it("keeps contact records sourced from verified content", () => {
-    expect(siteContent.contact.items).toEqual(verifiedSiteContent.contact.items);
-    expect(siteContent.contact.email).toBe(verifiedSiteContent.contact.email);
+    expect(siteContent.contact.items).toEqual(verifiedSiteContentVi.contact.items);
+    expect(siteContent.contact.email).toBe(verifiedSiteContentVi.contact.email);
   });
 
   it("uses an injected verified contact map URL instead of the neutral semantic slot", () => {
     const mapUrl = "https://maps.example.test/embed/aic";
     const contentWithMap: SiteContent = {
       ...siteContent,
-      contact: { ...verifiedSiteContent.contact, mapUrl },
+      contact: { ...verifiedSiteContentVi.contact, mapUrl },
     };
     render(<ContactPage content={contentWithMap} scaffoldMode={false} />, {
       wrapper: ({ children }) => <MemoryRouter>{children}</MemoryRouter>,
@@ -415,7 +415,7 @@ describe("organization layout variants", () => {
 
     expect(cards).toHaveLength(3);
     expect(Array.from(cards).map((card) => card.getAttribute("data-contact-card"))).toEqual(
-      verifiedSiteContent.contact.items.map((item) => item.id),
+      verifiedSiteContentVi.contact.items.map((item) => item.id),
     );
     expect(cardGrid).toHaveClass("md:grid-cols-3", "lg:grid-cols-1");
     expect(cardGrid?.className).not.toContain("sm:grid-cols");

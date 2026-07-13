@@ -65,17 +65,19 @@ export function ResearchGroupCard({
       data-research-card="lab"
       data-research-variant={variant}
       className={cn(
-        "flex h-full flex-col p-5 md:p-5",
+        "group flex h-full flex-col !rounded-xl border border-aic-line/60 shadow-sm transition-all hover:scale-[1.01] hover:shadow-md hover:-translate-y-0 p-5 md:p-5",
         variant === "featured" && "md:col-span-2 md:row-span-2 md:p-7",
-        variant === "accent" && "border-aic-blue/15 bg-aic-mist md:col-span-2 md:p-6",
+        variant === "accent" && "border-aic-blue/20 bg-aic-mist md:col-span-2 md:p-6",
       )}
     >
       {(item.mediaRef || item.image) && (
-        <ImageFrame
-          mediaRef={item.mediaRef}
-          asset={item.image}
-          className="mb-5 aspect-[4/3] rounded-card"
-        />
+        <div className="mb-5 aspect-[4/3] overflow-hidden rounded-lg">
+          <ImageFrame
+            mediaRef={item.mediaRef}
+            asset={item.image}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        </div>
       )}
       <CardCopy item={item} />
       {item.memberCount !== undefined && (
@@ -125,7 +127,7 @@ export function ResearchGrid({
   return (
     <div
       data-testid={isLabGrid ? "research-lab-grid" : "research-direction-grid"}
-      className={cn("grid grid-cols-1 gap-5", isLabGrid ? "md:grid-cols-4" : "md:grid-cols-3")}
+      className={cn("grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3")}
     >
       {isLabGrid
         ? labItems.map(({ item, variant: labVariant }) => (
@@ -169,7 +171,7 @@ export function ResearchDirectionScaffold({ count = 3 }: { count?: number }) {
 
 export function ResearchLabScaffold({ layout }: { layout: ResearchGroupLayout }) {
   return (
-    <div data-testid="research-lab-scaffold" className="grid grid-cols-1 gap-5 md:grid-cols-4">
+    <div data-testid="research-lab-scaffold" className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
       {layout.map(({ id, variant }) => {
         return (
           <Card

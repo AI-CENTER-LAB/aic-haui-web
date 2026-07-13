@@ -16,20 +16,23 @@ import { ContentSection } from "../components/sections/ContentSection";
 import { Button } from "../components/ui/Button";
 import { PageContainer } from "../components/ui/PageContainer";
 import { Section } from "../components/ui/Section";
-import { cooperationSectionLabels } from "../content/labels";
+import { useLabels } from "../content/labels";
 import { resolveSectionState, uiScaffoldMode } from "../content/selectors";
-import { siteContent } from "../content/site";
+import { useSiteContent } from "../content/site";
 import type { SiteContent } from "../content/types";
 import { scaffoldConfig } from "../scaffold/config";
 
 export function CooperationPage({
-  content = siteContent,
+  content,
   scaffoldMode,
 }: {
   content?: SiteContent;
   scaffoldMode?: boolean;
 }) {
-  const data = content.cooperation;
+  const defaultContent = useSiteContent();
+  const { cooperationSectionLabels } = useLabels();
+  const actualContent = content || defaultContent;
+  const data = actualContent.cooperation;
   const isScaffold = scaffoldMode ?? uiScaffoldMode;
   const cooperationTypes = [...data.enterprise, ...data.research, ...data.technologyTransfer];
   const typeState = resolveSectionState(
@@ -59,11 +62,11 @@ export function CooperationPage({
         <PageContainer className="grid grid-cols-1 items-center gap-10 md:grid-cols-2">
           <div>
             <h1 className="font-display text-4xl font-extrabold tracking-tight text-aic-navy md:text-5xl">
-              {content.pages.cooperation.title}
+              {actualContent.pages.cooperation.title}
             </h1>
-            {content.pages.cooperation.description && (
+            {actualContent.pages.cooperation.description && (
               <p className="mt-5 max-w-2xl text-lg leading-8 text-aic-muted">
-                {content.pages.cooperation.description}
+                {actualContent.pages.cooperation.description}
               </p>
             )}
             {heroActionHref && (
@@ -79,7 +82,7 @@ export function CooperationPage({
             {isScaffold ? (
               <MediaSkeleton className="aspect-[4/3]" />
             ) : (
-              <HeroMedia mediaRef={content.pages.cooperation.mediaRef} />
+              <HeroMedia mediaRef={actualContent.pages.cooperation.mediaRef} />
             )}
           </div>
         </PageContainer>

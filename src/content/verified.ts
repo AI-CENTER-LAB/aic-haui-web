@@ -1,10 +1,13 @@
 import type { SiteContent } from "./types";
 
 const email = "aic-sict@haui.edu.vn";
-const campusAddress =
+const campusAddressVi =
   "Đại học Công nghiệp Hà Nội, số 298, Đường Cầu Diễn, Phường Tây Tựu, Thành phố Hà Nội.";
 
-export const verifiedSiteContent: SiteContent = {
+const campusAddressEn =
+  "Hanoi University of Industry, 298 Cau Dien Street, Tay Tuu Ward, Hanoi City.";
+
+export const verifiedSiteContentVi: SiteContent = {
   identity: {
     shortName: "AIC",
     fullName: "Trung tâm Nghiên cứu và Ứng dụng Trí tuệ Nhân tạo",
@@ -59,13 +62,82 @@ export const verifiedSiteContent: SiteContent = {
         id: "office",
         label: "Văn phòng",
         primary: "Phòng 1201, Tòa nhà A1",
-        secondary: campusAddress,
+        secondary: campusAddressVi,
       },
       {
         id: "laboratory",
         label: "Phòng thí nghiệm",
         primary: "Phòng 1504, Tòa nhà A1",
-        secondary: campusAddress,
+        secondary: campusAddressVi,
+      },
+      { id: "email", label: "Email", primary: email, href: `mailto:${email}` },
+    ],
+  },
+  footer: {},
+};
+
+export const verifiedSiteContentEn: SiteContent = {
+  identity: {
+    shortName: "AIC",
+    fullName: "Artificial Intelligence Center",
+  },
+  hero: {
+    eyebrow: "AIC · HaUI · SICT",
+    title: "Artificial Intelligence Center",
+    description:
+      "A unit under the School of Information and Communication Technology, Hanoi University of Industry.",
+    primaryCta: "Explore center",
+    secondaryCta: "For students",
+  },
+  pages: {
+    about: { title: "About us" },
+    organization: { title: "Organization" },
+    research: { title: "Research" },
+    cooperation: { title: "Cooperation" },
+    students: { title: "For students" },
+    contact: { title: "Contact" },
+  },
+  about: {
+    intro:
+      "The Artificial Intelligence Center is a unit under the School of Information and Communication Technology - Hanoi University of Industry.",
+    vision:
+      "To become an open research unit, connecting domestic and international scientists to promote research, innovation and application of Artificial Intelligence and Information Technology.",
+    mission:
+      "Promoting research, innovation and application of Artificial Intelligence - Information Technology; connecting the university, enterprises and the community to create valuable solutions for society.",
+    parentUnit: "School of Information and Communication Technology - Hanoi University of Industry.",
+  },
+  people: [],
+  research: { directions: [], results: [], groups: [], activities: [] },
+  cooperation: {
+    enterprise: [],
+    research: [],
+    international: [],
+    technologyTransfer: [],
+    partners: [],
+    contactHref: `mailto:${email}`,
+  },
+  students: {
+    labs: [
+      { id: "foundry", name: "AIC Foundry Lab" },
+      { id: "innovation", name: "AIC Innovation Lab" },
+    ],
+    joinSteps: [],
+    contactHref: `mailto:${email}`,
+  },
+  contact: {
+    email,
+    items: [
+      {
+        id: "office",
+        label: "Office",
+        primary: "Room 1201, Building A1",
+        secondary: campusAddressEn,
+      },
+      {
+        id: "laboratory",
+        label: "Laboratory",
+        primary: "Room 1504, Building A1",
+        secondary: campusAddressEn,
       },
       { id: "email", label: "Email", primary: email, href: `mailto:${email}` },
     ],

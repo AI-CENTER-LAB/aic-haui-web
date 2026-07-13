@@ -40,16 +40,24 @@ export function PersonCard({
   if (variant === "teacher") {
     return (
       <Card
-        className={cn("flex items-center gap-4 p-4 md:p-4", className)}
+        className={cn("group flex items-center gap-4 p-4 md:p-4", className)}
         data-person-variant="teacher"
       >
         <PersonPortrait
           person={person}
-          className="!aspect-square h-16 w-16 shrink-0 rounded-xl shadow-none"
+          className="!aspect-square h-16 w-16 shrink-0 rounded-xl shadow-none grayscale transition duration-500 group-hover:grayscale-0"
         />
         <div className="min-w-0">
           <h3 className="font-display text-base font-bold text-aic-navy">{person.name}</h3>
           <p className="mt-1 text-xs font-semibold text-aic-gold-dark">{person.role}</p>
+          {person.email && (
+            <a
+              className="mt-2 block break-all text-xs font-semibold text-aic-blue hover:underline"
+              href={`mailto:${person.email}`}
+            >
+              {person.email}
+            </a>
+          )}
           {person.tags && person.tags.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1.5">
               {person.tags.map((tag) => (
@@ -69,10 +77,10 @@ export function PersonCard({
 
   if (variant === "student") {
     return (
-      <article className={cn("text-center", className)} data-person-variant="student">
+      <article className={cn("group text-center", className)} data-person-variant="student">
         <PersonPortrait
           person={person}
-          className="mx-auto !aspect-square h-20 w-20 rounded-2xl shadow-none"
+          className="mx-auto !aspect-square h-20 w-20 rounded-2xl shadow-none grayscale transition duration-500 group-hover:grayscale-0"
         />
         <h3 className="mt-3 font-display text-sm font-bold text-aic-navy">{person.name}</h3>
         <p className="mt-1 text-xs leading-5 text-aic-blue">{person.role}</p>
@@ -82,8 +90,8 @@ export function PersonCard({
 
   if (variant === "legacy") {
     return (
-      <Card className={cn("overflow-hidden p-0", className)} data-person-variant="legacy">
-        <PersonPortrait person={person} />
+      <Card className={cn("group overflow-hidden p-0", className)} data-person-variant="legacy">
+        <PersonPortrait person={person} className="grayscale transition duration-500 group-hover:grayscale-0" />
         <div className="p-5">
           <h3 className="font-display text-xl font-bold text-aic-navy">{person.name}</h3>
           <p className="mt-1 text-xs font-bold uppercase tracking-wide text-aic-gold-dark">
@@ -105,10 +113,10 @@ export function PersonCard({
 
   return (
     <Card
-      className={cn("overflow-hidden p-0", className)}
+      className={cn("group overflow-hidden p-0", className)}
       data-person-variant="director"
     >
-      <PersonPortrait person={person} className="!aspect-[4/3] rounded-none shadow-none" />
+      <PersonPortrait person={person} className="!aspect-[4/3] rounded-none shadow-none grayscale transition duration-500 group-hover:grayscale-0" />
       <div className="p-5">
         <h3 className="font-display text-xl font-bold text-aic-navy">{person.name}</h3>
         <p className="mt-1 text-xs font-bold tracking-wide text-aic-gold-dark">

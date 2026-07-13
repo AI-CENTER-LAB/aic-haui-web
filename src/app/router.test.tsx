@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { siteContent } from "../content/site";
 import { contactSectionLabels } from "../content/labels";
 import { stitchContent } from "../content/stitch";
-import { verifiedSiteContent } from "../content/verified";
+import { verifiedSiteContentVi } from "../content/verified";
 import { createAppRouter } from "./router";
 
 const cases = [
@@ -82,12 +82,12 @@ describe("home page", () => {
       ).toBeInTheDocument();
     }
 
-    expect(verifiedSiteContent.contact.items).toHaveLength(3);
+    expect(verifiedSiteContentVi.contact.items).toHaveLength(3);
     expect(
       within(contact).getByRole("heading", { level: 2, name: siteContent.pages.contact.title }),
     ).toBeInTheDocument();
     expect(within(contact).getAllByRole("heading", { level: 3 })).toHaveLength(3);
-    for (const item of verifiedSiteContent.contact.items) {
+    for (const item of verifiedSiteContentVi.contact.items) {
       expect(within(contact).getByText(item.label)).toBeInTheDocument();
     }
   });
@@ -140,7 +140,7 @@ describe("contact page", () => {
     render(<RouterProvider router={createAppRouter(["/lien-he"])} />);
 
     await screen.findByRole("heading", { level: 1, name: contactSectionLabels.heroTitle });
-    for (const item of verifiedSiteContent.contact.items) {
+    for (const item of verifiedSiteContentVi.contact.items) {
       expect(screen.getByRole("heading", { level: 2, name: item.primary })).toBeInTheDocument();
       expect(
         screen.queryByRole("heading", { level: 3, name: item.primary }),
@@ -155,12 +155,12 @@ describe("about page", () => {
 
     await screen.findByRole("heading", {
       level: 1,
-      name: verifiedSiteContent.pages.about.title,
+      name: verifiedSiteContentVi.pages.about.title,
     });
-    expect(screen.getByText(verifiedSiteContent.about.intro ?? "")).toBeInTheDocument();
-    expect(screen.getByText(verifiedSiteContent.about.parentUnit ?? "")).toBeInTheDocument();
-    expect(screen.getByText(verifiedSiteContent.about.vision ?? "")).toBeInTheDocument();
-    expect(screen.getByText(verifiedSiteContent.about.mission ?? "")).toBeInTheDocument();
+    expect(screen.getByText(verifiedSiteContentVi.about.intro ?? "")).toBeInTheDocument();
+    expect(screen.getByText(verifiedSiteContentVi.about.parentUnit ?? "")).toBeInTheDocument();
+    expect(screen.getByText(verifiedSiteContentVi.about.vision ?? "")).toBeInTheDocument();
+    expect(screen.getByText(verifiedSiteContentVi.about.mission ?? "")).toBeInTheDocument();
     expect(screen.queryByText(stitchContent.pages.about.description ?? "")).not.toBeInTheDocument();
   });
 

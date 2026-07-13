@@ -1,15 +1,17 @@
 import { RouteTransition } from "../components/layout/RouteTransition";
 import { HomeAbout } from "../components/sections/HomeAbout";
 import { PageHero } from "../components/sections/PageHero";
-import { aboutSectionLabels } from "../content/labels";
-import { verifiedSiteContent } from "../content/verified";
+import { useLabels } from "../content/labels";
+import { useSiteContent } from "../content/site";
 
 export function AboutPage() {
+  const siteContent = useSiteContent();
+  const { aboutSectionLabels } = useLabels();
   return (
     <RouteTransition>
-      <PageHero copy={verifiedSiteContent.pages.about} />
+      <PageHero copy={siteContent.pages.about} />
       <HomeAbout
-        content={verifiedSiteContent.about}
+        content={siteContent.about}
         title={aboutSectionLabels.introHeading}
         labels={aboutSectionLabels}
         showVideo={false}

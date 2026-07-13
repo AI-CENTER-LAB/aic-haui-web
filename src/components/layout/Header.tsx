@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { siteContent } from "../../content/site";
+import { useSiteContent } from "../../content/site";
+import { useLanguage } from "../../contexts/LanguageContext";
 import { PageContainer } from "../ui/PageContainer";
 import { DesktopNav } from "../navigation/DesktopNav";
 import { MobileNav } from "../navigation/MobileNav";
@@ -9,6 +10,8 @@ import { officialAssets } from "../../content/assets";
 
 export function Header() {
   const { pathname } = useLocation();
+  const siteContent = useSiteContent();
+  const { language, setLanguage } = useLanguage();
   const [scrolled, setScrolled] = useState(() => window.scrollY > 24);
   const onHome = pathname === "/";
   const overlay = onHome && !scrolled;
@@ -49,7 +52,20 @@ export function Header() {
           />
           <span>{siteContent.identity.shortName}</span>
         </Link>
-        <DesktopNav tone={overlay ? "dark" : "light"} />
+        <div className="flex items-center gap-4">
+          <DesktopNav tone={overlay ? "dark" : "light"} />
+          <div className={cn("hidden lg:flex items-center gap-2 text-sm font-semibold", overlay ? "text-white/80" : "text-aic-navy/80")}>
+            <button 
+              onClick={() => setLanguage("vn")}
+              className={cn("transition-colors hover:text-aic-blue", language === "vn" ? (overlay ? "text-white font-bold" : "text-aic-navy font-bold") : "")}
+            >VN</button>
+            <span className="opacity-40">|</span>
+            <button 
+              onClick={() => setLanguage("en")}
+              className={cn("transition-colors hover:text-aic-blue", language === "en" ? (overlay ? "text-white font-bold" : "text-aic-navy font-bold") : "")}
+            >EN</button>
+          </div>
+        </div>
         <MobileNav tone={overlay ? "dark" : "light"} />
       </PageContainer>
     </header>

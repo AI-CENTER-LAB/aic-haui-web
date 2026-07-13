@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { navigationRoutes } from "../../app/routes";
+import { useLabels } from "../../content/labels";
+import { useLanguage } from "../../contexts/LanguageContext";
 import { NavPill } from "../ui/NavPill";
 
 export function MobileNav({ tone = "light" }: { tone?: "light" | "dark" }) {
+  const { navigationLabels } = useLabels();
+  const { language, setLanguage } = useLanguage();
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -67,9 +71,30 @@ export function MobileNav({ tone = "light" }: { tone?: "light" | "dark" }) {
           <nav className="grid gap-1" aria-label="Điều hướng di động">
             {navigationRoutes.map((route) => (
               <NavPill key={route.key} to={route.path} onClick={() => setOpen(false)}>
-                {route.label}
+                {navigationLabels[route.key as keyof typeof navigationLabels]}
               </NavPill>
             ))}
+            <div className="mt-4 flex items-center justify-center gap-4 border-t border-aic-line/50 pt-4 text-sm font-semibold text-aic-navy/80">
+              <button
+                onClick={() => {
+                  setLanguage("vn");
+                  setOpen(false);
+                }}
+                className={language === "vn" ? "text-aic-navy font-bold" : ""}
+              >
+                VN
+              </button>
+              <span className="opacity-40">|</span>
+              <button
+                onClick={() => {
+                  setLanguage("en");
+                  setOpen(false);
+                }}
+                className={language === "en" ? "text-aic-navy font-bold" : ""}
+              >
+                EN
+              </button>
+            </div>
           </nav>
         </div>
       )}
