@@ -14,7 +14,7 @@ export function PageLayout() {
       </a>
       <ScrollToTop />
       <Header />
-      <main id="main-content" className="min-h-[70vh]">
+      <main id="main-content">
         <Outlet />
       </main>
       <Footer />

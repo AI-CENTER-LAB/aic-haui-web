@@ -1,0 +1,17 @@
+:root {
+  --aic-navy: #0b2a4a;
+  --aic-blue: #0f5ea8;
+  --aic-tech-blue: #1d9bf0;
+  --aic-ink: #102033;
+  --aic-muted: #64748b;
+  --aic-mist: #eaf5ff;
+  --aic-line: #d8e3f0;
+  --aic-gold: #f6d99b;
+  --aic-gold-dark: #9b7a3a;
+  --aic-warm: #fffaf0;
+  --shadow-soft: 0 20px 60px rgb(15 94 168 / 10%);
+  --shadow-card: 0 12px 34px rgb(11 42 74 / 8%);
+  --shadow-pill-dark:
+    inset 0 0 0 1px rgb(255 255 255 / 14%), inset 1.5px 2.5px 0 -2px rgb(255 255 255 / 72%),
+    inset -2px -2px 0 -2px rgb(255 255 255 / 44%), 0 6px 16px rgb(0 0 0 / 10%);
+}

@@ -1,22 +1,49 @@
-import { MapPinned } from "lucide-react";
+import { mediaManifest, resolveMedia } from "../../content/assets";
+import type { MediaManifest, MediaRef } from "../../content/types";
 import { MediaFrame } from "./MediaFrame";
 
-export function MapFrame({ url, title = "Bản đồ" }: { url?: string; title?: string }) {
+type MapFrameProps = {
+  mediaRef?: MediaRef;
+  manifest?: MediaManifest;
+  url?: string;
+  title?: string;
+};
+
+export function MapFrame({
+  mediaRef,
+  manifest = mediaManifest,
+  url,
+  title = "Bản đồ",
+}: MapFrameProps) {
+  const media = mediaRef ? resolveMedia(mediaRef, manifest) : undefined;
+  const embedUrl = media ? media.embedUrl : url;
+  const imageSrc = media?.src;
+  const accessibleTitle = media ? media.alt : title;
+
+  if (!mediaRef && !url) return null;
+
   return (
-    <MediaFrame className="aspect-video min-h-72">
-      {url ? (
+    <MediaFrame
+      className={`${media?.aspectRatio ?? "aspect-video"} min-h-72 rounded-video${!embedUrl && !imageSrc ? " prototype-media-slot" : ""}`}
+      aria-hidden={!embedUrl && !imageSrc ? true : undefined}
+      data-testid={!embedUrl && !imageSrc && mediaRef ? `media-slot-${mediaRef}` : undefined}
+    >
+      {embedUrl ? (
         <iframe
           className="h-full w-full border-0"
-          src={url}
-          title={title}
+          src={embedUrl}
+          title={accessibleTitle}
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
         />
-      ) : (
-        <div className="flex h-full min-h-72 items-center justify-center">
-          <MapPinned className="size-10 text-aic-blue/35" aria-hidden="true" />
-        </div>
-      )}
+      ) : imageSrc ? (
+        <img
+          className="h-full w-full object-cover"
+          src={imageSrc}
+          alt={accessibleTitle}
+          loading="lazy"
+        />
+      ) : null}
     </MediaFrame>
   );
 }

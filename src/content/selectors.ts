@@ -1,13 +1,13 @@
-import type { RuntimeMode, SectionState } from "./types";
+import type { ContentState } from "./types";
 
 export function resolveSectionState<T>(
   items: readonly T[],
-  mode: RuntimeMode,
-  requestedState?: SectionState,
-): SectionState {
-  if (requestedState === "hidden") return "hidden";
-  if (items.length > 0) return "ready";
-  return mode === "development" ? "empty" : "hidden";
+  scaffoldMode = uiScaffoldMode,
+  expectedCount?: number,
+): ContentState<T> {
+  if (items.length > 0) return { status: "ready", items: [...items] };
+  if (scaffoldMode) return { status: "scaffold", expectedCount };
+  return { status: "empty" };
 }
 
-export const runtimeMode: RuntimeMode = import.meta.env.DEV ? "development" : "production";
+export const uiScaffoldMode = import.meta.env.VITE_UI_SCAFFOLD_MODE === "true";

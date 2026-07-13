@@ -1,24 +1,19 @@
 import { createBrowserRouter, createMemoryRouter, type InitialEntry } from "react-router-dom";
 import type { ReactElement } from "react";
 import { PageLayout } from "../components/layout/PageLayout";
-import { AboutPage } from "../pages/AboutPage";
-import { ContactPage } from "../pages/ContactPage";
-import { CooperationPage } from "../pages/CooperationPage";
 import { HomePage } from "../pages/HomePage";
 import { NotFoundPage } from "../pages/NotFoundPage";
-import { OrganizationPage } from "../pages/OrganizationPage";
-import { ResearchPage } from "../pages/ResearchPage";
-import { StudentsPage } from "../pages/StudentsPage";
+import { DeferredPage } from "./DeferredPage";
 import { routes, type RouteKey } from "./routes";
 
 const pageByKey: Record<RouteKey, ReactElement> = {
   home: <HomePage />,
-  about: <AboutPage />,
-  organization: <OrganizationPage />,
-  research: <ResearchPage />,
-  cooperation: <CooperationPage />,
-  students: <StudentsPage />,
-  contact: <ContactPage />,
+  about: <DeferredPage routeKey="about" />,
+  organization: <DeferredPage routeKey="organization" />,
+  research: <DeferredPage routeKey="research" />,
+  cooperation: <DeferredPage routeKey="cooperation" />,
+  students: <DeferredPage routeKey="students" />,
+  contact: <DeferredPage routeKey="contact" />,
 };
 
 const children = [

@@ -22,9 +22,12 @@ describe("navigation", () => {
   it("closes the mobile menu with Escape", async () => {
     const user = userEvent.setup();
     render(<MobileNav />, { wrapper: ({ children }) => <MemoryRouter>{children}</MemoryRouter> });
-    await user.click(screen.getByRole("button", { name: "Mở menu" }));
+    const trigger = screen.getByRole("button", { name: "Mở menu" });
+    await user.click(trigger);
     expect(screen.getByRole("dialog")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Về chúng tôi" })).toHaveFocus();
     await user.keyboard("{Escape}");
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
   });
 });

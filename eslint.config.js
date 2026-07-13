@@ -6,7 +6,7 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", "legacy", "screenshots_aic"] },
+  { ignores: ["dist", "legacy", "screenshots*/**"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

@@ -4,18 +4,20 @@ import { resolveSectionState } from "./selectors";
 
 describe("resolveSectionState", () => {
   it("marks populated collections ready", () => {
-    expect(resolveSectionState(["content"], "production")).toBe("ready");
+    expect(resolveSectionState(["content"], false)).toEqual({
+      status: "ready",
+      items: ["content"],
+    });
   });
 
   it("hides missing content in production", () => {
-    expect(resolveSectionState([], "production")).toBe("hidden");
+    expect(resolveSectionState([], false)).toEqual({ status: "empty" });
   });
 
-  it("exposes missing content for layout QA in development", () => {
-    expect(resolveSectionState([], "development")).toBe("empty");
-  });
-
-  it("respects an explicit hidden state", () => {
-    expect(resolveSectionState(["content"], "development", "hidden")).toBe("hidden");
+  it("returns a neutral scaffold with the expected layout count in review mode", () => {
+    expect(resolveSectionState([], true, 7)).toEqual({
+      status: "scaffold",
+      expectedCount: 7,
+    });
   });
 });

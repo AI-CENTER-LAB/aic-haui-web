@@ -13,10 +13,10 @@
     "format:write": "prettier --write ."
   },
   "dependencies": {
+    "@fontsource/be-vietnam-pro": "^5.2.8",
     "@vitejs/plugin-react": "latest",
     "clsx": "latest",
     "lucide-react": "latest",
-    "motion": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest",

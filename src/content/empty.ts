@@ -2,7 +2,7 @@ import type { SiteContent } from "./types";
 
 export const emptySiteContent: SiteContent = {
   identity: {
-    shortName: "AIC Center",
+    shortName: "AIC",
     fullName: "Trung tâm Nghiên cứu và Ứng dụng Trí tuệ Nhân tạo",
   },
   hero: { title: "Trung tâm Nghiên cứu và Ứng dụng Trí tuệ Nhân tạo" },
@@ -17,7 +17,13 @@ export const emptySiteContent: SiteContent = {
   about: {},
   people: [],
   research: { directions: [], results: [], groups: [], activities: [] },
-  cooperation: { types: [], partners: [] },
+  cooperation: {
+    enterprise: [],
+    research: [],
+    international: [],
+    technologyTransfer: [],
+    partners: [],
+  },
   students: { labs: [], joinSteps: [] },
   contact: { items: [] },
   footer: {},
