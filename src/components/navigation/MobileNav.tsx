@@ -70,7 +70,12 @@ export function MobileNav({ tone = "light" }: { tone?: "light" | "dark" }) {
         >
           <nav className="grid gap-1" aria-label="Điều hướng di động">
             {navigationRoutes.map((route) => (
-              <NavPill key={route.key} to={route.path} onClick={() => setOpen(false)}>
+              <NavPill
+                key={route.key}
+                to={route.path}
+                homeSection={route.homeSection}
+                onClick={() => setOpen(false)}
+              >
                 {navigationLabels[route.key as keyof typeof navigationLabels]}
               </NavPill>
             ))}

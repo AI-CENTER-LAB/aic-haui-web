@@ -61,11 +61,11 @@ export function CooperationPage({
       >
         <PageContainer className="grid grid-cols-1 items-center gap-10 md:grid-cols-2">
           <div>
-            <h1 className="font-display text-4xl font-extrabold tracking-tight text-aic-navy md:text-5xl">
+            <h1 className="font-display text-4xl font-extrabold tracking-tight text-white md:text-5xl">
               {actualContent.pages.cooperation.title}
             </h1>
             {actualContent.pages.cooperation.description && (
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-aic-muted">
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-white/80">
                 {actualContent.pages.cooperation.description}
               </p>
             )}

@@ -1,10 +1,10 @@
 import { ContactGrid } from "../components/cards/ContactCards";
-import { PersonGrid } from "../components/cards/PersonCard";
 import { RouteTransition } from "../components/layout/RouteTransition";
 import { MapFrame } from "../components/media/MapFrame";
 import { DynamicHero } from "../components/sections/DynamicHero";
 import { HomeNews } from "../components/sections/HomeNews";
 import { HomeAbout } from "../components/sections/HomeAbout";
+import { OrganizationContent } from "../components/sections/OrganizationContent";
 import { PageContainer } from "../components/ui/PageContainer";
 import { Section } from "../components/ui/Section";
 import { SectionHeading } from "../components/ui/SectionHeading";
@@ -15,7 +15,6 @@ import { useLabels } from "../content/labels";
 export function HomePage() {
   const siteContent = useSiteContent();
   const { aboutSectionLabels } = useLabels();
-  const directors = siteContent.people.filter((person) => person.group === "director").slice(0, 3);
 
   return (
     <RouteTransition>
@@ -26,28 +25,27 @@ export function HomePage() {
           content={siteContent.about}
           title={aboutSectionLabels.homeHeading}
           labels={aboutSectionLabels}
+          sectionId="ve-chung-toi"
           testId="home-about"
         />
       </Reveal>
       <Reveal>
-        <Section data-testid="home-organization" className="bg-aic-mist/55">
+        <Section
+          id="to-chuc"
+          data-testid="home-organization"
+          className="scroll-mt-20 bg-aic-mist/55 lg:scroll-mt-24"
+        >
         <PageContainer>
-          <SectionHeading
-            title={siteContent.pages.organization.title}
-            description={siteContent.pages.organization.description}
-            align="center"
-            className="mb-10"
-          />
-          <PersonGrid
-            people={directors}
-            variant="director"
-            className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-          />
+          <OrganizationContent content={siteContent} />
         </PageContainer>
         </Section>
       </Reveal>
       <Reveal>
-        <Section data-testid="home-contact" className="bg-white">
+        <Section
+          id="lien-he"
+          data-testid="home-contact"
+          className="scroll-mt-20 bg-white lg:scroll-mt-24"
+        >
         <PageContainer>
           <SectionHeading
             title={siteContent.pages.contact.title}

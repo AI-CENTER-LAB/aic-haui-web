@@ -17,6 +17,46 @@ export type ResearchSectionLabels = {
 };
 
 const vi = {
+  layoutLabels: {
+    skipToContent: "Chuyển đến nội dung",
+  },
+  heroLabels: {
+    phrases: [
+      "Thị giác máy tính",
+      "Xử lý ngôn ngữ tự nhiên",
+      "Robot học",
+      "Khoa học dữ liệu",
+    ],
+  },
+  homeNewsLabels: {
+    title: "Tin tức & Sự kiện",
+    description:
+      "Cập nhật những hoạt động nghiên cứu, hội thảo và tin tức mới nhất từ trung tâm.",
+    readMore: "Xem chi tiết",
+    items: [
+      {
+        id: "1",
+        date: "12 Th08, 2026",
+        title: "AIC công bố 3 bài báo khoa học tại hội nghị quốc tế",
+        category: "Nghiên cứu",
+      },
+      {
+        id: "2",
+        date: "05 Th08, 2026",
+        title: "Tuyển sinh thành viên Gen mới tham gia các nhóm nghiên cứu",
+        category: "Tuyển sinh",
+      },
+      {
+        id: "3",
+        date: "28 Th07, 2026",
+        title: "Seminar: Ứng dụng AI trong Xử lý ngôn ngữ tự nhiên",
+        category: "Sự kiện",
+      },
+    ],
+  },
+  personCardLabels: {
+    biography: "Tiểu sử",
+  },
   aboutSectionLabels: {
     homeHeading: "Về chúng tôi",
     introHeading: "Giới thiệu",
@@ -78,6 +118,46 @@ const vi = {
 };
 
 const en = {
+  layoutLabels: {
+    skipToContent: "Skip to content",
+  },
+  heroLabels: {
+    phrases: [
+      "Computer Vision",
+      "Natural Language Processing",
+      "Robotics",
+      "Data Science",
+    ],
+  },
+  homeNewsLabels: {
+    title: "News & Events",
+    description:
+      "Updates on research activities, seminars, and the latest news from the center.",
+    readMore: "Read more",
+    items: [
+      {
+        id: "1",
+        date: "Aug 12, 2026",
+        title: "AIC publishes 3 scientific papers at an international conference",
+        category: "Research",
+      },
+      {
+        id: "2",
+        date: "Aug 05, 2026",
+        title: "Recruiting new Gen members to join research groups",
+        category: "Recruitment",
+      },
+      {
+        id: "3",
+        date: "Jul 28, 2026",
+        title: "Seminar: AI Applications in Natural Language Processing",
+        category: "Events",
+      },
+    ],
+  },
+  personCardLabels: {
+    biography: "Biography",
+  },
   aboutSectionLabels: {
     homeHeading: "About Us",
     introHeading: "Introduction",

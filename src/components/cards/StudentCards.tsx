@@ -20,17 +20,17 @@ export function StudentHero({
   const hasMedia = Boolean(scaffold || copy.mediaRef);
 
   return (
-    <header className="border-b border-aic-line bg-hero-wash py-16 md:py-24">
+    <header className="border-b border-aic-line bg-hero-wash bg-cover bg-center py-16 text-white md:py-24">
       <PageContainer
         data-testid="students-hero"
         className={hasMedia ? "grid items-center gap-10 md:grid-cols-2" : undefined}
       >
         <div>
-          <h1 className="font-display text-4xl font-extrabold tracking-tight text-aic-navy md:text-6xl">
+          <h1 className="font-display text-4xl font-extrabold tracking-tight text-white md:text-6xl">
             {copy.title}
           </h1>
           {copy.description && (
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-aic-muted">{copy.description}</p>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/80">{copy.description}</p>
           )}
           {ctaHref && (
             <Button href={ctaHref} className="mt-7">

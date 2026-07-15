@@ -63,9 +63,9 @@ export const stitchContent = {
         "Khám phá tầm nhìn, sứ mệnh và định hướng phát triển của Trung tâm Nghiên cứu và Ứng dụng Trí tuệ Nhân tạo.",
     },
     organization: {
-      title: "Cơ cấu Tổ chức",
+      title: "Tổ chức",
       description:
-        "Đội ngũ lãnh đạo và nghiên cứu viên cốt cán tại AIC. Chúng tôi quy tụ những chuyên gia hàng đầu và sinh viên xuất sắc, cùng nhau kiến tạo các giải pháp AI đột phá.",
+        "Trung tâm nghiên cứu có cơ cấu tổ chức gồm: Ban giám đốc, Hội đồng khoa học & tư vấn, cùng các Lab nghiên cứu.",
     },
     research: {
       title: "Nghiên cứu khoa học",
@@ -84,7 +84,11 @@ export const stitchContent = {
         "Môi trường nghiên cứu chuyên nghiệp dành cho sinh viên xuất sắc, nơi những ý tưởng đột phá được chắp cánh bằng nguồn lực và sự hướng dẫn tận tình từ các chuyên gia hàng đầu.",
       mediaRef: "students.hero",
     },
-    contact: { title: "Liên hệ" },
+    contact: {
+      title: "Liên hệ",
+      description:
+        "Trung tâm Nghiên cứu và Ứng dụng Trí tuệ Nhân tạo (AIC) luôn sẵn sàng kết nối, hợp tác và chia sẻ không gian nghiên cứu chuyên sâu.",
+    },
   },
   people: [
     {

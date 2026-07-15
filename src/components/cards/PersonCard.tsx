@@ -1,13 +1,17 @@
 import type { Person } from "../../content/types";
+import { useLabels } from "../../content/labels";
 import { cn } from "../../lib/cn";
 import { AvatarFrame } from "../media/AvatarFrame";
 import { Card } from "../ui/Card";
 
 export function BiographyDrawer({ person }: { person: Person }) {
+  const { personCardLabels } = useLabels();
   if (!person.bio) return null;
   return (
     <details className="mt-4 border-t border-aic-line pt-3 text-sm text-aic-muted">
-      <summary className="cursor-pointer font-semibold text-aic-blue">Tiểu sử</summary>
+      <summary className="cursor-pointer font-semibold text-aic-blue">
+        {personCardLabels.biography}
+      </summary>
       <p className="mt-2 leading-6">{person.bio}</p>
     </details>
   );
@@ -45,7 +49,7 @@ export function PersonCard({
       >
         <PersonPortrait
           person={person}
-          className="!aspect-square h-16 w-16 shrink-0 rounded-xl shadow-none grayscale transition duration-500 group-hover:grayscale-0"
+          className="!aspect-square h-16 w-16 shrink-0 rounded-xl shadow-none"
         />
         <div className="min-w-0">
           <h3 className="font-display text-base font-bold text-aic-navy">{person.name}</h3>
@@ -80,7 +84,7 @@ export function PersonCard({
       <article className={cn("group text-center", className)} data-person-variant="student">
         <PersonPortrait
           person={person}
-          className="mx-auto !aspect-square h-20 w-20 rounded-2xl shadow-none grayscale transition duration-500 group-hover:grayscale-0"
+          className="mx-auto !aspect-square h-20 w-20 rounded-2xl shadow-none"
         />
         <h3 className="mt-3 font-display text-sm font-bold text-aic-navy">{person.name}</h3>
         <p className="mt-1 text-xs leading-5 text-aic-blue">{person.role}</p>
@@ -91,7 +95,7 @@ export function PersonCard({
   if (variant === "legacy") {
     return (
       <Card className={cn("group overflow-hidden p-0", className)} data-person-variant="legacy">
-        <PersonPortrait person={person} className="grayscale transition duration-500 group-hover:grayscale-0" />
+        <PersonPortrait person={person} />
         <div className="p-5">
           <h3 className="font-display text-xl font-bold text-aic-navy">{person.name}</h3>
           <p className="mt-1 text-xs font-bold uppercase tracking-wide text-aic-gold-dark">
@@ -113,11 +117,16 @@ export function PersonCard({
 
   return (
     <Card
-      className={cn("group overflow-hidden p-0", className)}
+      className={cn("group overflow-hidden p-0 text-center", className)}
       data-person-variant="director"
     >
-      <PersonPortrait person={person} className="!aspect-[4/3] rounded-none shadow-none grayscale transition duration-500 group-hover:grayscale-0" />
-      <div className="p-5">
+      <div className="flex justify-center bg-white px-5 pt-6">
+        <PersonPortrait
+          person={person}
+          className="!aspect-square h-36 w-36 shrink-0 rounded-2xl shadow-soft [&_img]:object-contain"
+        />
+      </div>
+      <div className="p-5 pt-4">
         <h3 className="font-display text-xl font-bold text-aic-navy">{person.name}</h3>
         <p className="mt-1 text-xs font-bold tracking-wide text-aic-gold-dark">
           {person.role}
