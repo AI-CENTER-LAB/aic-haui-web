@@ -11,6 +11,7 @@ type HomeAboutProps = {
   labels: AboutSectionLabels;
   showVideo?: boolean;
   showParentUnit?: boolean;
+  sectionId?: string;
   testId?: string;
 };
 
@@ -20,11 +21,16 @@ export function HomeAbout({
   labels,
   showVideo = true,
   showParentUnit = false,
+  sectionId,
   testId,
 }: HomeAboutProps) {
   return (
     <>
-      <Section data-testid={testId} className="section-reveal overflow-hidden bg-aic-mist/60">
+      <Section
+        id={sectionId}
+        data-testid={testId}
+        className="section-reveal scroll-mt-20 overflow-hidden bg-aic-mist/60 lg:scroll-mt-24"
+      >
         <PageContainer>
           <div className="relative overflow-hidden rounded-media border border-aic-line bg-white shadow-soft lg:grid lg:grid-cols-[1.1fr_.9fr]">
             <div className="relative z-10 p-6 sm:p-9 lg:p-12 lg:pb-28">

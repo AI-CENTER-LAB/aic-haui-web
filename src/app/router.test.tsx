@@ -3,23 +3,18 @@ import { RouterProvider } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 
 import { siteContent } from "../content/site";
-import { contactSectionLabels } from "../content/labels";
-import { stitchContent } from "../content/stitch";
 import { verifiedSiteContentVi } from "../content/verified";
 import { createAppRouter } from "./router";
 
-const cases = [
+const pageCases = [
   ["/", "Trung tâm Nghiên cứu và Ứng dụng Trí tuệ Nhân tạo"],
-  ["/ve-chung-toi", "Về chúng tôi"],
-  ["/to-chuc", "Cơ cấu Tổ chức"],
   ["/nghien-cuu", "Nghiên cứu khoa học"],
   ["/hop-tac", "Mở Rộng Giới Hạn Cùng AI"],
   ["/sinh-vien", "Ươm mầm tài năng AI"],
-  ["/lien-he", contactSectionLabels.heroTitle],
 ] as const;
 
 describe("application routes", () => {
-  it.each(cases)("renders one page heading at %s", async (path, heading) => {
+  it.each(pageCases)("renders one page heading at %s", async (path, heading) => {
     render(<RouterProvider router={createAppRouter([path])} />);
 
     expect(await screen.findByRole("heading", { level: 1, name: heading })).toBeInTheDocument();
@@ -56,6 +51,7 @@ describe("home page", () => {
 
     expect(sections).toEqual([
       "home-hero",
+      "home-news",
       "home-about",
       "home-video",
       "home-organization",
@@ -135,44 +131,34 @@ describe("home page", () => {
   });
 });
 
-describe("contact page", () => {
-  it("uses level-two headings for all three contact cards below the page heading", async () => {
-    render(<RouterProvider router={createAppRouter(["/lien-he"])} />);
+describe("home landing sections", () => {
+  it("exposes anchor targets for about, organization, and contact", () => {
+    render(<RouterProvider router={createAppRouter(["/"])} />);
 
-    await screen.findByRole("heading", { level: 1, name: contactSectionLabels.heroTitle });
-    for (const item of verifiedSiteContentVi.contact.items) {
-      expect(screen.getByRole("heading", { level: 2, name: item.primary })).toBeInTheDocument();
-      expect(
-        screen.queryByRole("heading", { level: 3, name: item.primary }),
-      ).not.toBeInTheDocument();
-    }
-  });
-});
-
-describe("about page", () => {
-  it("renders only the verified institutional About copy", async () => {
-    render(<RouterProvider router={createAppRouter(["/ve-chung-toi"])} />);
-
-    await screen.findByRole("heading", {
-      level: 1,
-      name: verifiedSiteContentVi.pages.about.title,
-    });
-    expect(screen.getByText(verifiedSiteContentVi.about.intro ?? "")).toBeInTheDocument();
-    expect(screen.getByText(verifiedSiteContentVi.about.parentUnit ?? "")).toBeInTheDocument();
-    expect(screen.getByText(verifiedSiteContentVi.about.vision ?? "")).toBeInTheDocument();
-    expect(screen.getByText(verifiedSiteContentVi.about.mission ?? "")).toBeInTheDocument();
-    expect(screen.queryByText(stitchContent.pages.about.description ?? "")).not.toBeInTheDocument();
+    expect(document.getElementById("ve-chung-toi")).toBeInTheDocument();
+    expect(document.getElementById("to-chuc")).toBeInTheDocument();
+    expect(document.getElementById("lien-he")).toBeInTheDocument();
   });
 
-  it("uses a distinct introduction heading and semantic principle headings", async () => {
-    render(<RouterProvider router={createAppRouter(["/ve-chung-toi"])} />);
+  it.each([
+    ["/ve-chung-toi", verifiedSiteContentVi.about.intro ?? ""],
+    ["/to-chuc", siteContent.pages.organization.title ?? ""],
+    ["/lien-he", verifiedSiteContentVi.contact.items[0]?.label ?? ""],
+  ])("redirects legacy route %s to the home landing page", async (path, marker) => {
+    render(<RouterProvider router={createAppRouter([path])} />);
 
-    await screen.findByRole("heading", { level: 1, name: "Về chúng tôi" });
-    expect(screen.getByRole("heading", { level: 2, name: "Giới thiệu" })).toBeInTheDocument();
+    expect(await screen.findByText(marker)).toBeInTheDocument();
     expect(
-      screen.queryByRole("heading", { level: 2, name: "Về chúng tôi" }),
-    ).not.toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 3, name: "Tầm nhìn" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 3, name: "Sứ mệnh" })).toBeInTheDocument();
+      screen.getByRole("heading", { level: 1, name: siteContent.hero.title }),
+    ).toBeInTheDocument();
+  });
+
+  it("keeps contact cards on the home landing section", () => {
+    render(<RouterProvider router={createAppRouter(["/"])} />);
+    const contact = screen.getByTestId("home-contact");
+
+    for (const item of verifiedSiteContentVi.contact.items) {
+      expect(within(contact).getByText(item.label)).toBeInTheDocument();
+    }
   });
 });

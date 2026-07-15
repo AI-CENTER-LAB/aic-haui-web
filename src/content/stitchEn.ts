@@ -19,7 +19,7 @@ export const stitchContentEn: StitchContent = {
     organization: {
       title: "Organization",
       description:
-        "Core leadership and researchers at AIC. We gather top experts and excellent students, co-creating breakthrough AI solutions.",
+        "The research center is organized into a Board of Directors, a Scientific & Advisory Council, and research Labs.",
     },
     research: {
       title: "Scientific Research",
@@ -38,7 +38,11 @@ export const stitchContentEn: StitchContent = {
         "A professional research environment for excellent students, where breakthrough ideas take flight with resources and dedicated guidance from leading experts.",
       mediaRef: "students.hero",
     },
-    contact: { title: "Contact" },
+    contact: {
+      title: "Contact",
+      description:
+        "The Artificial Intelligence Research and Application Center (AIC) is always ready to connect, cooperate, and share in-depth research spaces.",
+    },
   },
   people: [
     {

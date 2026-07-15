@@ -7,7 +7,12 @@ export function DesktopNav({ tone = "light" }: { tone?: "light" | "dark" }) {
   return (
     <nav aria-label="Điều hướng chính" className="hidden items-center gap-1 lg:flex">
       {navigationRoutes.map((route) => (
-        <NavPill key={route.key} to={route.path} tone={tone}>
+        <NavPill
+          key={route.key}
+          to={route.path}
+          homeSection={route.homeSection}
+          tone={tone}
+        >
           {navigationLabels[route.key as keyof typeof navigationLabels]}
         </NavPill>
       ))}

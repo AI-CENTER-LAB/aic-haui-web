@@ -1,4 +1,4 @@
-import { createBrowserRouter, createMemoryRouter, type InitialEntry } from "react-router-dom";
+import { createBrowserRouter, createMemoryRouter, Navigate, type InitialEntry } from "react-router-dom";
 import type { ReactElement } from "react";
 import { PageLayout } from "../components/layout/PageLayout";
 import { HomePage } from "../pages/HomePage";
@@ -8,12 +8,12 @@ import { routes, type RouteKey } from "./routes";
 
 const pageByKey: Record<RouteKey, ReactElement> = {
   home: <HomePage />,
-  about: <DeferredPage routeKey="about" />,
-  organization: <DeferredPage routeKey="organization" />,
+  about: <Navigate to="/#ve-chung-toi" replace />,
+  organization: <Navigate to="/#to-chuc" replace />,
   research: <DeferredPage routeKey="research" />,
   cooperation: <DeferredPage routeKey="cooperation" />,
   students: <DeferredPage routeKey="students" />,
-  contact: <DeferredPage routeKey="contact" />,
+  contact: <Navigate to="/#lien-he" replace />,
 };
 
 const children = [
